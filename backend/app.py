@@ -3,7 +3,7 @@ import time
 import logging
 from flask_cors import CORS
 from flask import Flask, jsonify, request
-from backend.ocr import process_document_sample
+from ocr import process_document_sample
 from src.config import PORT
 from werkzeug.utils import secure_filename
 import os
@@ -25,6 +25,9 @@ def upload_image():
         result = process_document_sample(file_path, 'image/png')
         return jsonify({"message": "Image uploaded successfully", "result": result}), 200
 
+@APP.route('/test', methods=['GET'])
+def test():
+    return jsonify({"message": "success"}), 200
 
 CORS(APP)
 
