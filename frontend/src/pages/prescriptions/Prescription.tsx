@@ -1,7 +1,11 @@
-import { Progress } from "antd";
+import { DatePicker, Progress } from "antd";
 import { useState, useEffect } from "react";
 import Camera from "../../components/Camera";
-import DateTimePicker from "../../components/DateTimePicker";
+import axios from "axios";
+import Accordion from "../../components/Accordion";
+import { add, format } from "date-fns";
+import { TPrescription } from "../../types/types";
+import type { DatePickerProps } from 'antd';
 
 const Prescription = () => {
   document.title = "Add Prescription | ${name}";
@@ -9,7 +13,11 @@ const Prescription = () => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [isCamera, setIsCamera] = useState(false);
-  const [data, setData] = useState([])
+  const [data, setData] = useState<TPrescription | undefined>();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [reminders, setReminders] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -27,6 +35,7 @@ const Prescription = () => {
 
     const formData = new FormData();
     formData.append("image", image);
+<<<<<<< HEAD
     
     const response = await fetch(
       "https://unihack-2024-backend.zax.sh/upload-image",
@@ -43,11 +52,56 @@ const Prescription = () => {
       setData(res);
     } else {
       console.error('failed to fetch prescription');
+=======
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8088/upload-image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setData(JSON.parse(response.data.result));
+      setIsLoaded(true);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+>>>>>>> e8a7a68 (feat(frontend): add progress)
     }
   };
 
+  const calcFrequency = () => {
+    if (data?.duration && data?.frequency) {
+      const divisor = ((data.duration * 24) / data.frequency) / data.duration
+      const times = []
+      let currTime = add(new Date(), {
+        hours: divisor
+      })
+      const endTime = add(new Date(), {
+        days: data?.duration
+      })
+      while (currTime < endTime) {
+        times.push(format(currTime, "EEEE do MMM, hb"))
+        currTime = add(currTime, {
+          hours: data?.duration
+        })
+      }
+      setReminders(times)
+      console.log(reminders)
+    }
+  }
+
   useEffect(() => {
-  }, [progress, isCamera, preview, image]);
+    calcFrequency()
+  }, [data, startDate, endDate])
+
+  useEffect(() => {}, [progress, isCamera, preview, image]);
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(dateString);
+  };
 
   return (
     <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
@@ -108,8 +162,8 @@ const Prescription = () => {
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium"
               onClick={() => {
-                setProgress(progress + 1);
                 fetchPrescription();
+                setProgress(progress + 1);
               }}
             >
               Next
@@ -123,14 +177,19 @@ const Prescription = () => {
           <p className="text-sm text-slate-800 mb-5">
             Confirm that this is what the prescription says:
           </p>
-          {image && (
-            <img
-              src={preview}
-              alt="prescription image"
-              className="flex flex-col justify-center items-center w-4/5 mb-4"
-            />
-          )}
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-col md:flex-row md:items-start gap-3 items-center justify-center w-4/5">
+            <div className="w-3/4 md:2/5">
+              <Accordion data={data} />
+            </div>
+            {image && (
+              <img
+                src={preview}
+                alt="prescription image"
+                className="flex flex-col justify-center items-center mb-4"
+              />
+            )}
+          </div>
+          <div className="flex justify-end gap-2 my-16">
             <button
               className="bg-indigo-200 text-indigo-900 rounded-xl px-4 py-2 text-sm font-medium"
               onClick={() => setProgress(progress - 1)}
@@ -157,18 +216,9 @@ const Prescription = () => {
             Are you happy with these scheduled reminders for medication XYZ?
           </p>
           <div className="flex flex-col gap-4 w-full md:w-3/4 mb-8">
-            {/* TODO: fix */}
             <div className="flex flex-row justify-between">
-              <p className="text-sm text-slate-800 my-2">Breakfast</p>
-              <DateTimePicker />
-            </div>
-            <div className="flex flex-row justify-between">
-              <p className="text-sm text-slate-800 my-2">Lunch</p>
-              <DateTimePicker />
-            </div>
-            <div className="flex flex-row justify-between">
-              <p className="text-sm text-slate-800 my-2">Dinner</p>
-              <DateTimePicker />
+              <DatePicker onChange={onChange} />
+              <DatePicker onChange={onChange} />
             </div>
             <div className="flex justify-end gap-2">
               <button

@@ -24,9 +24,6 @@ const Profiles = () => {
     <div className="flex justify-center items-center w-full flex-col gap-3">
       <div className="flex flex-row justify-between gap-4 w-4/5">
         <h2 className="font-semibold text-2xl">Family Profiles</h2>
-        <IconButton title={"Add family profile"}>
-          <PlusOutlined />
-        </IconButton>
       </div>
       <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
         {data.map((d, index) => (

@@ -7,14 +7,6 @@ const Barcode = () => {
   const [barcode, setBarcode] = useState('Scanning...');
   const [data, setData] = useState([]);
 
-  const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      const uploadLogo = e.target.files[0];
-      setImage(uploadLogo);
-      setPreview(URL.createObjectURL(uploadLogo));
-    }
-  };
-
   const handleScan = async () => {
     const response = await fetch(`https://unihack-2024-backend.zax.sh/scan?barcode=${barcode}`);
     if (response.ok) {
@@ -70,29 +62,12 @@ const Barcode = () => {
     <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
       <h2 className="font-semibold text-2xl mt-3">Add a barcode</h2>
       <p className="text-sm text-slate-800 mb-5">
-        Upload or scan your prescription barcode to learn more
+        Scan your prescription barcode to learn more
       </p>
-      <div className="flex flex-row space-between gap-x-6 mb-5 align-middle">
-        <label
-          htmlFor="logo"
-          className="bg-indigo-200 text-indigo-900 hover:bg-indigo-300 rounded-xl px-4 py-2 text-sm font-medium cursor-pointer"
-        >
-          Upload a photo
-        </label>
-        <input
-          id="logo"
-          name="logo"
-          type="file"
-          accept="image/jpeg, image/png, image/jpg"
-          required
-          hidden
-          onChange={uploadImg}
-        />
-      </div>
       {/* Barcode scanner */}
-      <div className="flex flex-row justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
+        <p className="mb-4">Your results: {barcode}</p>
         <div id="barcode-scanner" />
-        <p>Your results: {barcode}</p>
       </div>
     </div>
   );
