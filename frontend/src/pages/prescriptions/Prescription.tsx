@@ -35,24 +35,6 @@ const Prescription = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-<<<<<<< HEAD
-    
-    const response = await fetch(
-      "https://unihack-2024-backend.zax.sh/upload-image",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData
-      }
-    );
-    if (response.ok) {
-      const res = await response.json();
-      setData(res);
-    } else {
-      console.error('failed to fetch prescription');
-=======
 
     try {
       const response = await axios.post(
@@ -68,7 +50,6 @@ const Prescription = () => {
       setIsLoaded(true);
     } catch (error) {
       console.error("Error uploading image:", error);
->>>>>>> e8a7a68 (feat(frontend): add progress)
     }
   };
 
