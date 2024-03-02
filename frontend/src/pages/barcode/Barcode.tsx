@@ -106,7 +106,9 @@ const Barcode = ({data, setData, setIsLoaded}: { data: TPrescription| undefined,
       {/* Barcode scanner */}
       <div className="flex flex-col justify-center items-center">
         <p className="mb-4">Your results: {barcode}</p>
-        <div id="barcode-scanner" />
+        <div id="barcode-scanner" className="w-full max-h-[400px] relative overflow-hidden">
+          {/* Quagga's video or canvas elements will be appended here */}
+        </div>
       </div>
     </div>
   );
