@@ -9,13 +9,13 @@ import IconButton from "./IconButton";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className="fixed w-screen bottom-0 left-10 right-10 z-40 bg-white backdrop-blur py-3 flex justify-between items-center border-t border-slate-900/1">
-      <div className="pr-10">
+    <div className="fixed w-screen bottom-0 left-0 right-0 z-40 bg-white backdrop-blur py-3 flex justify-between items-center border-t border-slate-900/1">
+      <div className="pl-10">
         <IconButton title="Add prescription" onClick={() => navigate("/prescription")}>
           <CameraOutlined />
         </IconButton>
       </div>
-      <div className="pr-10">
+      <div>
         <IconButton title="Access profile" onClick={() => navigate("/profiles")}>
           <TeamOutlined />
         </IconButton>

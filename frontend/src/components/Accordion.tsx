@@ -12,12 +12,12 @@ const Accordion = ({ data }: { data: TPrescription}) => {
     {
       key: '2',
       label: 'Duration',
-      children: <p>{data?.duration}</p>,
+      children: <p>{data?.duration} days</p>,
     },
     {
       key: '3',
       label: 'Frequency',
-      children: <p>{data?.frequency}</p>,
+      children: <p>{data?.frequency} doses a day</p>,
     },
     {
       key: '4',

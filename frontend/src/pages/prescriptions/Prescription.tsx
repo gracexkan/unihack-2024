@@ -40,7 +40,7 @@ const Prescription = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8088/upload-image",
+        "https://unihack-2024-backend.zax.sh/upload-image",
         formData,
         {
           headers: {
@@ -126,7 +126,7 @@ const Prescription = () => {
         </div>
       )}
       {progress === 1 && (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center py-10">
           <h3 className="font-semibold text-md mb-2">Step Two</h3> 
           {scan && <Barcode />}  
           {!scan && <><p className="text-sm text-slate-800 mb-5">
@@ -179,7 +179,10 @@ const Prescription = () => {
             </button>
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium"
-              onClick={() => setProgress(progress + 1)}
+              onClick={() => {
+                fetchPrescription();
+                setProgress(progress + 1);
+              }}
             >
               Next
             </button>
