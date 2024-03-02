@@ -1,25 +1,32 @@
 import {
   CameraOutlined,
   MedicineBoxOutlined,
-  SettingOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import IconButton from "./IconButton";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className="fixed w-screen bottom-0 left-0 right-0 z-40 bg-white backdrop-blur py-3 flex justify-between items-center border-t border-slate-900/1">
-      <div className="pl-10 text-slate-900">
-        <Link to="/camera"><CameraOutlined /></Link>
+      <div className="pl-10">
+        <IconButton title="Scan barcode" onClick={() => navigate("/camera")}>
+          <CameraOutlined />
+        </IconButton>
       </div>
-      <div className="text-slate-900">
-        <Link to="/prescription"><MedicineBoxOutlined /></Link>
+      <div>
+        <IconButton title="Add prescription" onClick={() => navigate("/prescription")}>
+          <MedicineBoxOutlined />
+        </IconButton>
       </div>
-      <div className=" text-slate-900">
-        <Link to="/profiles"><TeamOutlined /></Link>
-      </div>
-      <div className="pr-10 text-slate-900">
-        <Link to="/preferences"><SettingOutlined /></Link>
+      <IconButton title="Access profile" onClick={() => navigate("/profiles")}>
+        <TeamOutlined />
+      </IconButton>
+      <div className="pr-10">
+        <IconButton title="Edit preferences" onClick={() => navigate("/preferences")}>
+          <TeamOutlined />
+        </IconButton>
       </div>
     </div>
   );

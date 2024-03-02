@@ -29,11 +29,11 @@ const UserPreferences = () => {
       </div>
       <span className="w-4/5 text-xs text-center text-slate-800 mb-4">Note: this information is used to automatically schedule preferred reminders to take your medication.</span>
       <div className="flex flex-row space-x-8">
-        <button className="bg-indigo-500 text-white rounded-xl border-indigo-500 px-4 py-2 text-sm font-medium">
+        <button className="bg-indigo-500 text-white rounded-xl px-4 py-2 text-sm font-medium">
           <Link to="/profiles">Save</Link>
         </button>
-        <button className="bg-indigo-200 text-indigo-900 rounded-xl border-indigo-500 px-4 py-2 text-sm font-medium">
-          Discard
+        <button className="bg-indigo-200 text-indigo-900 rounded-xl px-4 py-2 text-sm font-medium">
+          <Link to="/profiles">Discard</Link>
         </button>
       </div>
     </div>
