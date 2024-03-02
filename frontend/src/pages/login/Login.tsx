@@ -1,8 +1,11 @@
 import { Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthProvider";
+import { v4 as uuidv4 } from "uuid";
 
 const Login = () => {
   document.title = "Sign In | ${name}";
+  const { setToken } = useAuthContext();
   return (
     <div className="flex justify-center items-center w-full flex-col gap-3">
       <h2 className="font-semibold text-2xl mb-2">Login</h2>
@@ -34,7 +37,7 @@ const Login = () => {
         ></Form.Item>
         <Input.Password />
       </div>
-      <button className="bg-indigo-500 text-white rounded-xl border-indigo-500 px-4 py-2 font-medium">
+      <button className="bg-indigo-500 text-white rounded-xl border-indigo-500 px-4 py-2 font-medium" onClick={() => setToken(uuidv4())}>
         <Link to="/profiles">Submit</Link>
       </button>
       <p className="text-slate-800 text-xs">

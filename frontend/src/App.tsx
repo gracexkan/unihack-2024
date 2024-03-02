@@ -7,6 +7,8 @@ import Landing from './pages/landing/Landing'
 import Onboarding from './pages/onboarding/Onboarding'
 import UserPreferences from './pages/preferences/Preferences'
 import Profiles from './pages/profiles/Profiles'
+import Prescription from './pages/prescriptions/Prescription'
+import { AuthProvider } from './context/AuthProvider'
 
 // TODO: add auth to make it so that landing alternates 
 const routes = [
@@ -20,14 +22,17 @@ const routes = [
   <Route key="register" path="/register" element={<Register />} />,
   <Route key="profiles" path="/profiles" element={<Profiles />} />,
   <Route key="preferences" path="/preferences" element={<UserPreferences />} />,
+  <Route key="prescription" path="/prescription" element={<Prescription />} />,
 ]
 
 const App = () => (
-  <BrowserRouter>
-    <Navbar />
-    <Routes>{routes}</Routes>
-    <Footer />
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>{routes}</Routes>
+      <Footer />
+    </BrowserRouter>
+  </AuthProvider>
 );
 
 export default App;
