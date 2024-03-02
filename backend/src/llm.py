@@ -7,7 +7,8 @@ def process_llm(info):
         {}
         {}
         {}
-    """.format(info["results"][0].get("dosage_and_administration"), info["results"][0].get("boxed_warning"), info["results"][0].get("indications_and_usage"))
+        {}
+    """.format(info["results"][0].get("openfda").get("brand_name"), info["results"][0].get("dosage_and_administration"), info["results"][0].get("boxed_warning"), info["results"][0].get("indications_and_usage"))
 
     prompt = """
     1. Given the info:
