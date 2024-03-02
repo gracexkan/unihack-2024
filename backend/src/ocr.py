@@ -2,6 +2,7 @@ from typing import Optional
 
 from google.api_core.client_options import ClientOptions
 from google.cloud import documentai  # type: ignore
+from src.ocr_llm import process_llm
 
 project_id = "wit-ocr"
 location = "us"
@@ -46,4 +47,4 @@ def process_document_sample(
 
     document = result.document
 
-    return document.text
+    return process_llm(document.text)

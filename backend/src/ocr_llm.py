@@ -5,9 +5,7 @@ import os
 def process_llm(info):
     medical_info = """
         {}
-        {}
-        {}
-    """.format(info["results"][0]["dosage_and_administration"], info["results"][0]["boxed_warning"], info["results"][0]["indications_and_usage"])
+    """.format(info)
 
     prompt = """
     1. Given the info:
