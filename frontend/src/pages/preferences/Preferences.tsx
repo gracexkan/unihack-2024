@@ -4,7 +4,7 @@ import DateTimePicker from "../../components/DateTimePicker";
 
 const UserPreferences = () => {
   // TODO: update name
-  document.title = "Preferences | ${name}";
+  document.title = "Preferences | Pill Pal";
   return (
     <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
       <h2 className="font-semibold text-2xl mb-2">User Preferences</h2>

@@ -2,13 +2,13 @@ import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthProvider";
 
 const Landing = () => {
-  document.title = "Home | ${name}";
+  document.title = "Home | Pill Pal";
   const navigate = useNavigate();
   const { token } = useAuthContext();
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center py-40">
-      <h2 className="font-semibold text-2xl mb-2">$name</h2>
+      <h2 className="font-semibold text-2xl mb-2">Welcome to Pill Pal</h2>
       {token ? null : (
         <div className="flex flex-col w-4/5 md:w-2/5 gap-5">
           <button

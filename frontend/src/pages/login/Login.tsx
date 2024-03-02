@@ -4,7 +4,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
 
 const Login = () => {
-  document.title = "Sign In | ${name}";
+  document.title = "Sign In | Pill Pal";
   const { setToken } = useAuthContext();
   return (
     <div className="flex justify-center items-center w-full flex-col gap-3">

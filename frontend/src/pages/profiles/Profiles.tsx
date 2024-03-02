@@ -17,7 +17,7 @@ const data = [
 ];
 
 const Profiles = () => {
-  document.title = "Family Profiles | ${name}";
+  document.title = "Family Profiles | Pill Pal";
   const [toggle, setToggle] = useState(true);
 
   return (

@@ -8,7 +8,7 @@ import { TPrescription } from "../../types/types";
 import type { DatePickerProps } from 'antd';
 
 const Prescription = () => {
-  document.title = "Add Prescription | ${name}";
+  document.title = "Add Prescription | Pill Pal";
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
