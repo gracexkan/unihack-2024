@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthProvider";
+import logo from '../../assets/logo.png';
 
 const Landing = () => {
   document.title = "Home | Pill Pal";
@@ -7,8 +8,10 @@ const Landing = () => {
   const { token } = useAuthContext();
 
   return (
-    <div className="flex flex-col gap-5 justify-center items-center py-40">
+    <div className="flex flex-col gap-5 justify-center items-center py-20 px-5">
+      <img width={300} src={logo} alt="Description" />
       <h2 className="font-semibold text-2xl mb-2">Welcome to Pill Pal</h2>
+      <p className="text-center">Thanks for choosing pill pal as your prescription management service!</p>
       {token ? null : (
         <div className="flex flex-col w-4/5 md:w-2/5 gap-5">
           <button
@@ -25,6 +28,7 @@ const Landing = () => {
           </button>
         </div>
       )}
+      <p className="text-center text-xs">Created by (wit): Frances, Grace, Joanna and Michael</p>
     </div>
   );
 };
