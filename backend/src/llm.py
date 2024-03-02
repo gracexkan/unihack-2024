@@ -1,16 +1,6 @@
-import pathlib
-import textwrap
-
 import google.generativeai as genai
 
-from IPython.display import display
-from IPython.display import Markdown
-
 import os
-
-def to_markdown(text):
-  text = text.replace('•', '  *')
-  return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 medical_info = """
       "indications_and_usage": [
@@ -41,8 +31,7 @@ medicationName (String), duration (int), frequency (int), mlDosage (int), mgDosa
 Put fields as null if you can't find info on them. Do not put in comments. Only send back the json.
 """.format(medical_info)
 
-# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
-GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY') # userdata.get('GOOGLE_API_KEY')
+GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -50,5 +39,4 @@ model = genai.GenerativeModel('gemini-pro')
 
 response = model.generate_content(prompt)
 
-to_markdown(response.text)
 print(response.text)
