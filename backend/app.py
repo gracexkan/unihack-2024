@@ -3,6 +3,8 @@ import time
 import logging
 from flask_cors import CORS
 from flask import Flask, jsonify, request
+import requests
+from src.llm import process_llm
 from src.ocr import process_document_sample
 from src.config import PORT
 from werkzeug.utils import secure_filename
@@ -25,6 +27,29 @@ def upload_image():
         result = process_document_sample(file_path, 'image/png')
         os.remove(file_path)
         return jsonify({"message": "Image uploaded successfully", "result": result}), 200
+    
+@APP.route('/scan', methods=['GET'])
+def scan_barcode():
+    # query param
+    barcode_number = request.args.get('barcode')
+    if not barcode_number:
+        return "No barcode number provided.", 400
+    
+    # https://api.fda.gov/drug/label.json?search=openfda.upc={barcode_number}
+    api_url = f"https://api.fda.gov/drug/label.json?search=openfda.upc={barcode_number}"
+
+    try:
+        # GET request to the FDA API
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            if "results" not in response.json():
+                return jsonify({"error": str(e)}), 500 
+            else:
+                return jsonify(process_llm(response.json())), 200
+        else:
+            return jsonify({"error": "Failed to retrieve drug information"}), response.status_code
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500  
 
 @APP.route('/test', methods=['GET'])
 def test():
