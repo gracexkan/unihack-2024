@@ -29,7 +29,7 @@ const Prescription = () => {
     formData.append("image", image);
     
     const response = await fetch(
-      "http://127.0.0.1:8088/upload-image",
+      "https://unihack-2024-backend.zax.sh/upload-image",
       {
         method: "POST",
         headers: {

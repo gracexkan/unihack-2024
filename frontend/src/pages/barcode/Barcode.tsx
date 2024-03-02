@@ -16,7 +16,7 @@ const Barcode = () => {
   };
 
   const handleScan = async () => {
-    const response = await fetch(`http://127.0.0.1:8088/scan?barcode=${barcode}`);
+    const response = await fetch(`https://unihack-2024-backend.zax.sh/scan?barcode=${barcode}`);
     if (response.ok) {
       const res = await response.json();
       setData(res);
