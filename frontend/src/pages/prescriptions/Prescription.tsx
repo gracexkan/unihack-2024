@@ -163,7 +163,7 @@ const Prescription = () => {
         <div className="flex flex-col items-center justify-center">
           <h3 className="font-semibold text-md mb-2">Step One</h3>
           <p className="text-sm text-slate-800 mb-5">
-            What would you like to scan to add a prescription?
+            What would you like to scan to add a prescription? (Please note that scanning the bar code only works on US drugs).
           </p>
           <div className="flex flex-row space-between gap-x-6 mb-5 align-middle">
             <label
