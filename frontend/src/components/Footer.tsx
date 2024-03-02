@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <div className="fixed w-screen bottom-0 left-0 right-0 z-40 bg-white backdrop-blur py-3 flex justify-between items-center border-t border-slate-900/1">
       <div className="pl-10">
-        <IconButton title="Scan barcode" onClick={() => navigate("/camera")}>
+        <IconButton title="Scan barcode" onClick={() => navigate("/barcode")}>
           <CameraOutlined />
         </IconButton>
       </div>

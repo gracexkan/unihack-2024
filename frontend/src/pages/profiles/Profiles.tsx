@@ -1,4 +1,4 @@
-import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { EyeOutlined, PlusOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import Card from "../../components/Card";
 import { useState } from "react";
 import IconButton from "../../components/IconButton";
@@ -22,6 +22,22 @@ const Profiles = () => {
 
   return (
     <div className="flex justify-center items-center w-full flex-col gap-3">
+      <div className="flex flex-row justify-between gap-4 w-4/5">
+        <h2 className="font-semibold text-2xl">Family Profiles</h2>
+        <IconButton title={"Add family profile"}>
+          <PlusOutlined />
+        </IconButton>
+      </div>
+      <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
+        {data.map((d, index) => (
+          <div key={index}>
+            <h3 className="font-semibold text-md mb-2">
+              {d.name}'s Prescriptions
+            </h3>
+            <Card key={index}>{d.prescription}</Card>
+          </div>
+        ))}
+      </div>
       <div className="flex flex-row justify-between gap-4 w-4/5 mt-4">
         <h2 className="font-semibold text-2xl">Your Profile</h2>
         {toggle ? (

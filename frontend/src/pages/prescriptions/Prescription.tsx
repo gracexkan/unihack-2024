@@ -1,6 +1,3 @@
-// confirm prescription output
-// reminder summary / scheduling / generation
-
 import { Progress } from "antd";
 import { useState, useEffect } from "react";
 import Camera from "../../components/Camera";
@@ -12,6 +9,7 @@ const Prescription = () => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [isCamera, setIsCamera] = useState(false);
+  const [data, setData] = useState([])
 
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -21,7 +19,35 @@ const Prescription = () => {
     }
   };
 
-  useEffect(() => {}, [progress, isCamera, preview, image]);
+  const fetchPrescription = async () => {
+    if (!image) {
+      alert("Please select a file first");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", image);
+    
+    const response = await fetch(
+      "http://127.0.0.1:8088/upload-image",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData
+      }
+    );
+    if (response.ok) {
+      const res = await response.json();
+      setData(res);
+    } else {
+      console.error('failed to fetch prescription');
+    }
+  };
+
+  useEffect(() => {
+  }, [progress, isCamera, preview, image]);
 
   return (
     <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
@@ -64,7 +90,13 @@ const Prescription = () => {
               onChange={uploadImg}
             />
           </div>
-          {isCamera && <Camera isVisible={isCamera} setPreview={setPreview} setImage={setImage}/>}
+          {isCamera && (
+            <Camera
+              isVisible={isCamera}
+              setPreview={setPreview}
+              setImage={setImage}
+            />
+          )}
           {!isCamera && image && (
             <img
               src={preview}
@@ -75,7 +107,10 @@ const Prescription = () => {
           <div className="flex mt-5 mb-10">
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium"
-              onClick={() => setProgress(progress + 1)}
+              onClick={() => {
+                setProgress(progress + 1);
+                fetchPrescription();
+              }}
             >
               Next
             </button>

@@ -12,6 +12,8 @@
   "dependencies": {
     "antd": "^5.14.2",
     "autoprefixer": "^10.4.18",
+    "axios": "^1.6.7",
+    "quagga": "^0.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.2",
