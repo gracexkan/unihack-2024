@@ -12,7 +12,6 @@ const Barcode = () => {
     if (response.ok) {
       const res = await response.json();
       setData(res);
-      console.log(JSON.parse(res));
     } else {
       console.error('unable to scan barcode');
     }

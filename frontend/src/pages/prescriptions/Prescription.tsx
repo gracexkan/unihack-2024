@@ -177,7 +177,9 @@ const Prescription = () => {
             <label
               htmlFor="logo"
               className="bg-indigo-200 text-indigo-900 hover:bg-indigo-300 rounded-xl px-4 py-2 text-sm font-medium cursor-pointer"
-              onClick={() => setIsCamera(false)}
+              onClick={() => {
+                setIsCamera(false);
+              }}
             >
               Upload a photo
             </label>
@@ -215,8 +217,8 @@ const Prescription = () => {
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium"
               onClick={() => {
-                fetchPrescription();
                 setProgress(progress + 1);
+                {!isCamera && fetchPrescription()}
               }}
             >
               Next
