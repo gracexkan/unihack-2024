@@ -1,4 +1,4 @@
-import { DatePicker, Progress } from "antd";
+import { Button, DatePicker, Progress, Space, TimePicker } from "antd";
 import { useState, useEffect } from "react";
 import Camera from "../../components/Camera";
 import axios from "axios";
@@ -7,6 +7,8 @@ import { add, format } from "date-fns";
 import { TPrescription } from "../../types/types";
 import type { DatePickerProps } from 'antd';
 import Barcode from "../barcode/Barcode";
+import moment from 'moment';
+import dayjs from 'dayjs';
 
 const Prescription = () => {
   document.title = "Add Prescription | Pill Pal";
@@ -16,10 +18,22 @@ const Prescription = () => {
   const [isCamera, setIsCamera] = useState(false);
   const [data, setData] = useState<TPrescription | undefined>();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [reminders, setReminders] = useState();
+  const [reminders, setReminders] = useState<string[]>([]);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [scan, setScan] = useState(false);
+
+  const { RangePicker } = DatePicker;
+
+  const addReminder = () => {
+    setReminders([...reminders, '']); // Add an empty string as a placeholder for the new reminder
+  };
+
+  const updateReminder = (value: dayjs.Dayjs | null, index: number) => {
+    const newReminders = [...reminders];
+    newReminders[index] = value ? value.format('HH:mm') : '';
+    setReminders(newReminders);
+  };
 
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -62,7 +76,7 @@ const Prescription = () => {
   }  
 
   const fetchPrescription = async () => {
-    if (!image) {
+    if (!image && !scan) {
       alert("Please select a file first");
       return;
     }
@@ -83,7 +97,7 @@ const Prescription = () => {
       let resp = JSON.parse(response.data.result);
       resp['dose'] = fieldsNotMinusOne(resp);
       resp['unit'] = keysNotMinusOne(resp);
-      setData(JSON.parse(response.data.result));
+      setData(JSON.parse(resp.data.result));
       setIsLoaded(true);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -110,6 +124,19 @@ const Prescription = () => {
       console.log(reminders)
     }
   }
+
+  const getInitialDates = (): [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined] | undefined => {
+    const today = moment();
+    let endDate = today.clone();
+  
+    if (data?.duration && data?.duration > 0) {
+      endDate = endDate.add(data?.duration, 'days');
+      // Convert moment objects to dayjs
+      return [dayjs(today.toDate()), dayjs(endDate.toDate())];
+    } else {
+      return undefined;
+    }
+  };
 
   useEffect(() => {
     calcFrequency()
@@ -163,7 +190,7 @@ const Prescription = () => {
       {progress === 1 && (
         <div className="flex flex-col items-center justify-center py-10">
           <h3 className="font-semibold text-md mb-2">Step Two</h3> 
-          {scan && <Barcode />}  
+          {scan && <Barcode data={data} setData={setData} setIsLoaded={setIsLoaded} />}  
           {!scan && <><p className="text-sm text-slate-800 mb-5">
             Provide a photo of your prescription
           </p>
@@ -215,7 +242,9 @@ const Prescription = () => {
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium"
               onClick={() => {
+                if (!scan) {
                 fetchPrescription();
+                }
                 setProgress(progress + 1);
               }}
             >
@@ -261,18 +290,31 @@ const Prescription = () => {
       {progress === 3 && (
         <div className="w-4/5 flex flex-col justify-center items-center">
           <h3 className="font-semibold text-md mb-2">Step Four</h3>
-          <p className="text-sm text-slate-800 mb-5">
+          <p className="text-sm text-slate-800 mb-5 mt-5">
             We have scheduled the following reminders according to your
             requirements and preferences.
           </p>
           <p className="text-sm text-slate-800 mb-5">
-            Are you happy with these scheduled reminders for medication XYZ?
+            Are you happy with these scheduled reminders for medication {data?.medicationName}?
           </p>
-          <div className="flex flex-col gap-4 w-full md:w-3/4 mb-8">
-            <div className="flex flex-row justify-between">
-              <DatePicker onChange={onChange} />
-              <DatePicker onChange={onChange} />
-            </div>
+          <div className="flex flex-col gap-4 w-full md:w-3/4 mb-8 mt-4">
+            <p className="text-sm text-slate-800 mb-1">
+              Start and end dates:
+            </p>
+            <RangePicker defaultValue={getInitialDates()}/>
+            <Space direction="vertical" size="large">
+              {reminders.map((reminder, index) => (
+                <TimePicker
+                  key={index}
+                  value={reminder ? dayjs(reminder, 'HH:mm') : null}
+                  format="HH:mm"
+                  onChange={(time) => updateReminder(time, index)}
+                />
+              ))}
+              <button className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl px-4 py-2 text-sm font-medium" onClick={addReminder}>
+                Add Reminder
+              </button>
+            </Space>
             <div className="flex justify-end gap-2">
               <button
                 className="bg-indigo-200 text-indigo-900 rounded-xl px-4 py-2 text-sm font-medium"

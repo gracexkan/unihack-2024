@@ -1,18 +1,56 @@
 import { useEffect, useState } from "react";
 import Quagga from "quagga";
+import { TPrescription } from "../../types/types";
 
-const Barcode = () => {
+const Barcode = ({data, setData, setIsLoaded}: { data: TPrescription| undefined, setData: (data: TPrescription) => void, setIsLoaded: (isLoaded: boolean) => void }) => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [barcode, setBarcode] = useState('Scanning...');
-  const [data, setData] = useState([]);
+
+  const fieldsNotMinusOne = (prescription: TPrescription) => {
+    const result = [];
+    for (const [key, value] of Object.entries(prescription)) {
+      if (value !== -1 && ["mlDosage", "mgDosage", "numPills"].includes(key)) {
+        result.push(value);
+      }
+    }
+    if (result.length === 0) {
+      result.push(-1);
+    }
+    return result[0];
+  }
+
+  const keysNotMinusOne = (prescription: TPrescription) => {
+    const result = [];
+    for (const [key, value] of Object.entries(prescription)) {
+      if (value !== -1 && ["mlDosage", "mgDosage", "numPills"].includes(key)) {
+        if (key === "mlDosage") {
+          result.push("ml");
+        } else if (key === "mgDosage") {
+          result.push("mg");
+        } else {
+          result.push("pills/capsules")
+        }
+      }
+    }
+    if (result.length === 0) {
+      result.push("mg");
+    }
+    return result[0];
+  }  
 
   const handleScan = async () => {
     const response = await fetch(`https://unihack-2024-backend.zax.sh/scan?barcode=${barcode}`);
     if (response.ok) {
       const res = await response.json();
-      setData(res);
-      console.log(JSON.parse(res));
+      console.log(res);
+      let resp = JSON.parse(res.replace(/\n/g, ''));
+      resp['dose'] = fieldsNotMinusOne(resp);
+      resp['unit'] = keysNotMinusOne(resp);
+      setData(resp);
+      setIsLoaded(true);
+      console.log(res);
+      console.log(resp);
     } else {
       console.error('unable to scan barcode');
     }

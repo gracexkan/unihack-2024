@@ -40,7 +40,7 @@ const Accordion = ({ data, setData }: { data: TPrescription, setData: (data: TPr
     {
       key: '1',
       label: 'Medicine name',
-      children: <p><input type="text" className="border border-gray-300 rounded p-1" value={data?.medicationName || ''} onChange={handleMedicationNameChange} /></p>,
+      children: <p><input type="text" className="border border-gray-300 rounded p-1" value={data?.medicationName || ''} onChange={handleMedicationNameChange} required /></p>,
     },
     {
       key: '2',
@@ -52,12 +52,14 @@ const Accordion = ({ data, setData }: { data: TPrescription, setData: (data: TPr
             className="border border-gray-300 rounded p-1" 
             value={data?.dose} 
             onChange={handleDoseChange} 
+            required 
           />
           <input 
             type="number" 
             className="border border-gray-300 rounded p-1" 
             value={data?.unit === null ? "Unknown unit" : `${data?.unit}`} 
             onChange={handleUnitChange} 
+            required 
           />
         </p>
       ),
@@ -65,22 +67,22 @@ const Accordion = ({ data, setData }: { data: TPrescription, setData: (data: TPr
     {
       key: '3',
       label: 'Duration',
-      children: <p><input type="number" className="border border-gray-300 rounded p-1" value={data?.duration} onChange={handleDurationChange} /> days (where -1 = everyday)</p>,
+      children: <p><input type="number" className="border border-gray-300 rounded p-1" value={data?.duration} onChange={handleDurationChange} required /> days (where -1 = everyday)</p>,
     },
     {
       key: '4',
       label: 'Frequency',
-      children: <p><input type="number" className="border border-gray-300 rounded p-1" value={data?.frequency} onChange={handleFrequencyChange} /> doses a day</p>,
+      children: <p><input type="number" className="border border-gray-300 rounded p-1" value={data?.frequency} onChange={handleFrequencyChange} required /> doses a day</p>,
     },
     {
       key: '5',
       label: 'Restrictions',
-      children: <input type="text" className="border border-gray-300 rounded p-1" value={data?.restrictions?.join(' ') || ''} onChange={handleRestrictionsChange} />,
+      children: <input type="text" className="border border-gray-300 rounded p-1" value={data?.restrictions?.join(' ') || ''} onChange={handleRestrictionsChange} required />,
     },
     {
       key: '6',
       label: 'Severity',
-      children: <p><input type="text" className="border border-gray-300 rounded p-1" value={data?.severity === "null" ? "Unknown" : `${data?.severity}`} onChange={handleSeverityChange} /> chance of issues arising if the medication is not taken.</p>,
+      children: <p><input type="text" className="border border-gray-300 rounded p-1" value={data?.severity === "null" ? "Unknown" : `${data?.severity}`} onChange={handleSeverityChange} required /> chance of issues arising if the medication is not taken.</p>,
     },
   ];
 
