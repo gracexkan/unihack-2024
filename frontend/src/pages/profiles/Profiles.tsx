@@ -3,22 +3,42 @@ import Card from "../../components/Card";
 import { useState } from "react";
 import IconButton from "../../components/IconButton";
 import Pill from "../../components/Pill";
+import { Tag } from 'antd';
 
 // TODO: delete
 const data = [
   {
     name: "John",
-    prescription: "fdsfjklds",
+    prescription: "Ibuprofen",
+    restrictions: ["Take with food.", "Do not exceed 2400mg in 24 hours."],
+    duration: 5,
+    frequency: 4,
+    severity: 'Low'
   },
   {
     name: "Jane",
-    prescription: "fdsfjklds",
+    prescription: "Lexapro",
+    restrictions: ["Take with food.", "Do not exceed 1800mg in 24 hours."],
+    duration: 6,
+    frequency: 8,
+    severity: 'Medium'
   },
 ];
 
 const Profiles = () => {
   document.title = "Family Profiles | Pill Pal";
   const [toggle, setToggle] = useState(true);
+
+  const changeBgColour = (severity: string) => {
+    const s = severity.toLowerCase();
+    if (s.includes("low")) {
+      return "green-300"
+    } else if (s.includes("medium")) {
+      return "orange-300"
+    } else if (s.includes("high")) {
+      return "red-300"
+    }
+  }
 
   return (
     <div className="flex justify-center items-center w-full flex-col gap-3">
@@ -31,7 +51,16 @@ const Profiles = () => {
             <h3 className="font-semibold text-md mb-2">
               {d.name}'s Prescriptions
             </h3>
-            <Card key={index}>{d.prescription}</Card>
+            <div className="flex items-start">
+              <Card key={index}>
+                <div className="flex flex-col gap-2">
+                  <h4 className="text-left font-semibold text-md">💊 {d.prescription}</h4>
+                  <Tag className={`w-min bg-${changeBgColour(d.severity)} border-${changeBgColour(d.severity)} text-slate-900`}>{d.severity}</Tag>
+                  <p className="text-left text-sm text-slate-800">Administer prescription every {d.frequency} hours for {d.duration} days </p>
+                  <p className="text-left text-sm text-slate-800">Notes: {d.restrictions.join(" ")}</p>
+                </div>
+              </Card>
+            </div>
           </div>
         ))}
       </div>
@@ -53,7 +82,14 @@ const Profiles = () => {
       <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
         {data.map((d, index) => (
           <div key={index}>
-            <Card key={index}>{d.prescription}</Card>
+            <Card key={index}>
+              <div className="flex flex-col gap-2">
+                <h4 className="text-left font-semibold text-md">💊 {d.prescription}</h4>
+                <Tag className={`w-min bg-${changeBgColour(d.severity)} border-${changeBgColour(d.severity)} text-slate-900`}>{d.severity}</Tag>
+                <p className="text-left text-sm text-slate-800">Administer prescription every {d.frequency} hours for {d.duration} days </p>
+                <p className="text-left text-sm text-slate-800">Notes: {d.restrictions.join(" ")}</p>
+              </div>
+            </Card>
           </div>
         ))}
       </div>
