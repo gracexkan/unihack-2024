@@ -126,7 +126,7 @@ const Prescription = () => {
         </div>
       )}
       {progress === 1 && (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center py-10">
           <h3 className="font-semibold text-md mb-2">Step Two</h3> 
           {scan && <Barcode />}  
           {!scan && <><p className="text-sm text-slate-800 mb-5">
