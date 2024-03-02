@@ -29,6 +29,38 @@ const Prescription = () => {
     }
   };
 
+  const fieldsNotMinusOne = (prescription: TPrescription) => {
+    const result = [];
+    for (const [key, value] of Object.entries(prescription)) {
+      if (value !== -1 && ["mlDosage", "mgDosage", "numPills"].includes(key)) {
+        result.push(value);
+      }
+    }
+    if (result.length === 0) {
+      result.push(-1);
+    }
+    return result[0];
+  }
+
+  const keysNotMinusOne = (prescription: TPrescription) => {
+    const result = [];
+    for (const [key, value] of Object.entries(prescription)) {
+      if (value !== -1 && ["mlDosage", "mgDosage", "numPills"].includes(key)) {
+        if (key === "mlDosage") {
+          result.push("ml");
+        } else if (key === "mgDosage") {
+          result.push("mg");
+        } else {
+          result.push("pills/capsules")
+        }
+      }
+    }
+    if (result.length === 0) {
+      result.push("mg");
+    }
+    return result[0];
+  }  
+
   const fetchPrescription = async () => {
     if (!image) {
       alert("Please select a file first");
@@ -48,6 +80,9 @@ const Prescription = () => {
           },
         }
       );
+      let resp = JSON.parse(response.data.result);
+      resp['dose'] = fieldsNotMinusOne(resp);
+      resp['unit'] = keysNotMinusOne(resp);
       setData(JSON.parse(response.data.result));
       setIsLoaded(true);
     } catch (error) {
@@ -197,7 +232,7 @@ const Prescription = () => {
           </p>
           <div className="flex flex-col md:flex-row md:items-start gap-3 items-center justify-center w-4/5">
             <div className="w-3/4 md:2/5">
-              <Accordion data={data} />
+              {isLoaded ? <Accordion data={data} setData={setData}/> : <p>Extracting data from image...</p>}
             </div>
             {image && (
               <img
