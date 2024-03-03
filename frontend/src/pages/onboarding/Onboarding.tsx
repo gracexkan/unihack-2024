@@ -9,6 +9,7 @@ const Onboarding = () => {
   const [lunchTime, setLunchTime] = useState('');
   const [dinnerTime, setDinnerTime] = useState('');
   const [reminderTime, setReminderTime] = useState('');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   useEffect(() => {
     const loadedPreferences = {
