@@ -87,7 +87,7 @@ const Accordion = ({
             onChange={handleDurationChange}
             required
           />{" "}
-          days (where -1 = everyday)
+          days
         </p>
       ),
     },
