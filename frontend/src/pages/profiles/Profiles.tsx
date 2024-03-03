@@ -76,7 +76,7 @@ const Profiles = () => {
           </IconButton>
         )}
       </div>
-      <div className="w-4/5 lg:flex lg:justify-start">
+      <div className="w-4/5 lg:flex lg:gap-2 lg:justify-start">
         <div className="flex flex-row justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
           <SmileOutlined />
           {"Tip: you can turn the visibility of your prescriptions to your family group on and off."}
