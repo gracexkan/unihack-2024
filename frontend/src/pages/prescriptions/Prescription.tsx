@@ -25,9 +25,9 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
 
   const openNotification = () => {
     notification.open({
-      message: 'Notification Title',
+      message: 'Reminder scheduled',
       description:
-        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        'A reminder has been scheduled!',
       onClick: () => {
         console.log('Notification Clicked!');
       },
