@@ -5,7 +5,7 @@ type PillProps = {
 
 const Pill = ({ message }: PillProps) => {
   return (
-    <div className="flex flex-row justify-evenly gap-2 bg-orange-200 text-orange-700 rounded-lg text-xs p-2">
+    <div className="w-fit flex flex-row justify-evenly gap-2 bg-orange-200 text-orange-700 rounded-lg text-xs p-2">
       <WarningOutlined />
       {message}
     </div>

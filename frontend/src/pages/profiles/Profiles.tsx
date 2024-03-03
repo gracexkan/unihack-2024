@@ -1,4 +1,4 @@
-import { EyeOutlined, PlusOutlined, EyeInvisibleOutlined, SmileOutlined } from "@ant-design/icons";
+import { EyeOutlined, EyeInvisibleOutlined, SmileOutlined } from "@ant-design/icons";
 import Card from "../../components/Card";
 import { useState } from "react";
 import IconButton from "../../components/IconButton";
@@ -41,7 +41,7 @@ const Profiles = () => {
   }
 
   return (
-    <div className="flex justify-center items-center w-full flex-col gap-3 pb-5 mb-10">
+    <div className="flex justify-center items-center w-full flex-col gap-3 pb-5 mb-2">
       <div className="flex flex-row justify-between gap-4 w-4/5">
         <h2 className="font-semibold text-2xl">Family Profiles</h2>
       </div>
@@ -76,12 +76,12 @@ const Profiles = () => {
           </IconButton>
         )}
       </div>
-      <div className="w-4/5 lg:flex lg:gap-2 lg:justify-start">
-        <div className="flex flex-row justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
+      <div className="w-4/5 lg:flex flex-col lg:justify-start">
+        <Pill message={"Warning: medication A and medication B may have potential side effects when taken together. Please check with your G.P."} />
+        <div className="w-fit flex flex-row mt-2 justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
           <SmileOutlined />
           {"Tip: you can turn the visibility of your prescriptions to your family group on and off."}
         </div>
-        <Pill message={"Warning: medication A and medication B may have potential side effects when taken together. Please check with your G.P."} />
       </div>
       <div className="mb-80 flex flex-col m-0 w-4/5 lg:flex-row gap-4">
         {data.map((d, index) => (
