@@ -21,10 +21,6 @@ const Notifications = ({
       <p className="text-sm text-center text-slate-800 w-4/5">
         Here are your upcoming reminders.
       </p>
-      <div className="w-fit flex flex-row mt-2 justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
-        <SmileOutlined />
-        {"Tip: Click on the clock icon to add another 15 minutes to the original notification."}
-      </div>
       <div className="flex flex-col w-4/5 gap-4">
         {reminders.map((reminder, index) => (
           <div className="flex flex-row gap-4 justify-between" key={index}>

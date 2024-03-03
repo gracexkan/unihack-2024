@@ -26,6 +26,7 @@ const data = [
 ];
 
 const Profiles = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   document.title = "Family Profiles | Pill Pal";
   const [toggle, setToggle] = useState(true);
 
@@ -78,7 +79,7 @@ const Profiles = () => {
       </div>
       <div className="w-4/5 lg:flex flex-col lg:justify-start">
         <Pill message={"Warning: medication A and medication B may have potential side effects when taken together. Please check with your G.P."} />
-        <div className="w-fit flex flex-row mt-2 justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
+        <div className="w-fit flex flex-row mt-2 justify-evenly gap-2 bg-indigo-200 text-indigo-700 rounded-lg text-xs p-2 mb-2">
           <SmileOutlined />
           {"Tip: you can turn the visibility of your prescriptions to your family group on and off."}
         </div>
