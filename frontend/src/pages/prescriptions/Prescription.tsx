@@ -115,27 +115,22 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
       console.error("Error uploading image:", error);
     }
   };
-
+    
   const calcFrequency = () => {
     if (data?.duration && data?.frequency) {
-      const divisor = ((data.duration * 24) / data.frequency) / data.duration
-      const times = []
-      let currTime = add(new Date(), {
-        hours: divisor
-      })
-      const endTime = add(new Date(), {
-        days: data?.duration
-      })
-      while (currTime < endTime) {
-        times.push(format(currTime, "EEEE do MMM, hb"))
-        currTime = add(currTime, {
-          hours: data?.duration
-        })
+      const divisor = ((data.duration * 24) / data.frequency) / data.duration;
+      const times = [];
+      let currTime = dayjs();
+      const endTime = currTime.add(data.duration, 'day');
+      
+      while (currTime.isBefore(endTime)) {
+        times.push(currTime.format("h:mm A ddd, MMM D, YYYY"));
+        currTime = currTime.add(divisor, 'hour');
       }
-      setReminders(times)
-      console.log(reminders)
+      setReminders(times);
+      console.log(reminders);
     }
-  }
+  };
 
   const getInitialDates = (): [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined] | undefined => {
     const today = moment();
@@ -152,7 +147,7 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
 
   useEffect(() => {
     calcFrequency()
-    console.log(data);
+    console.log(reminders);
   }, [data, startDate, endDate])
 
   useEffect(() => {}, [progress, isCamera, preview, image]);
@@ -321,8 +316,8 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
               {reminders.map((reminder, index) => (
                 <TimePicker
                   key={index}
-                  value={reminder ? dayjs(reminder, 'HH:mm') : null}
-                  format="HH:mm"
+                  value={reminder ? dayjs(reminder, 'h:mm') : null}
+                  format="h:mm"
                   onChange={(time) => updateReminder(time, index)}
                 />
               ))}
