@@ -1,4 +1,4 @@
-import { DatePicker, Progress, Space, TimePicker } from "antd";
+import { DatePicker, Progress, Space, TimePicker, notification } from "antd";
 import { useState, useEffect } from "react";
 import Camera from "../../components/Camera";
 import axios from "axios";
@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 
 const Prescription = ({reminders, setReminders} : { reminders: string[], setReminders: (reminders: string[]) => void }) => {
   document.title = "Add Prescription | Pill Pal";
+  const [data, setData] = useState<TPrescription | undefined>();
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
@@ -22,14 +23,27 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
 
   const { RangePicker } = DatePicker;
 
+  const openNotification = () => {
+    notification.open({
+      message: 'Notification Title',
+      description:
+        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+    });
+  };
+
   const addReminder = () => {
     setReminders([...reminders, '']);
+    openNotification();
   };
 
   const updateReminder = (value: dayjs.Dayjs | null, index: number) => {
     const newReminders = [...reminders];
     newReminders[index] = value ? value.format('HH:mm') : '';
     setReminders(newReminders);
+    openNotification();
   };
 
   const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
