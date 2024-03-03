@@ -9,6 +9,16 @@ const Notifications = ({
   reminders: string[];
   setReminders: (reminders: string[]) => void;
 }) => {
+  const openNotification = (reminder: string) => {
+    notification.open({
+      message: 'Reminder dismissed',
+      description:
+        reminder,
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+    });
+  }
   const removeReminder = (index: number) => {
     const newReminders = [...reminders];
     newReminders.splice(index, 1);
@@ -27,7 +37,10 @@ const Notifications = ({
             <p>{reminder}</p>
             <button
               className="bg-indigo-200 text-indigo-900 hover:bg-indigo-300 rounded-xl px-4 py-2 text-sm font-medium"
-              onClick={() => removeReminder(index)}
+              onClick={() => {
+                removeReminder(index);
+                openNotification("Medication has been taken");
+              }}
             >
               Dismiss
             </button>
