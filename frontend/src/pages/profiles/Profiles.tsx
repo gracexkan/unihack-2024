@@ -83,7 +83,7 @@ const Profiles = () => {
         </div>
         <Pill message={"Warning: Ibuprofen and Lexapro may have potential side effects when taken together. Please check with your G.P."} />
       </div>
-      <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
+      <div className="mb-80 flex flex-col m-0 w-4/5 lg:flex-row gap-4">
         {data.map((d, index) => (
           <div key={index}>
             <Card key={index}>
