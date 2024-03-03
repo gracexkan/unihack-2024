@@ -78,6 +78,7 @@ const Prescription = () => {
   const fetchPrescription = async () => {
     if (!image && !scan) {
       alert("Please select a file first");
+      setIsLoaded(false);
       return;
     }
 
@@ -97,7 +98,7 @@ const Prescription = () => {
       let resp = JSON.parse(response.data.result);
       resp['dose'] = fieldsNotMinusOne(resp);
       resp['unit'] = keysNotMinusOne(resp);
-      setData(JSON.parse(resp.data.result));
+      setData(resp);
       setIsLoaded(true);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -143,10 +144,6 @@ const Prescription = () => {
   }, [data, startDate, endDate])
 
   useEffect(() => {}, [progress, isCamera, preview, image]);
-
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(dateString);
-  };
 
   return (
     <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
