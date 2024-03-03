@@ -1,11 +1,10 @@
-import { Button, DatePicker, Progress, Space, TimePicker } from "antd";
+import { DatePicker, Progress, Space, TimePicker } from "antd";
 import { useState, useEffect } from "react";
 import Camera from "../../components/Camera";
 import axios from "axios";
 import Accordion from "../../components/Accordion";
 import { add, format } from "date-fns";
 import { TPrescription } from "../../types/types";
-import type { DatePickerProps } from 'antd';
 import Barcode from "../barcode/Barcode";
 import moment from 'moment';
 import dayjs from 'dayjs';
@@ -139,6 +138,7 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
 
   useEffect(() => {
     calcFrequency()
+    console.log(data);
   }, [data, startDate, endDate])
 
   useEffect(() => {}, [progress, isCamera, preview, image]);

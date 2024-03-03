@@ -41,7 +41,7 @@ const Profiles = () => {
   }
 
   return (
-    <div className="flex justify-center items-center w-full flex-col gap-3">
+    <div className="flex justify-center items-center w-full flex-col gap-3 pb-5 mb-10">
       <div className="flex flex-row justify-between gap-4 w-4/5">
         <h2 className="font-semibold text-2xl">Family Profiles</h2>
       </div>
