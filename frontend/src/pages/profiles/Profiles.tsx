@@ -81,7 +81,7 @@ const Profiles = () => {
           <SmileOutlined />
           {"Tip: you can turn the visibility of your prescriptions to your family group on and off."}
         </div>
-        <Pill message={"Warning: medication A and medication B may have potential side effects when taken together. Please check with your G.P."} />
+        <Pill message={"Warning: Ibuprofen and Lexapro may have potential side effects when taken together. Please check with your G.P."} />
       </div>
       <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
         {data.map((d, index) => (
