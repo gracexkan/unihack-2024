@@ -1,4 +1,4 @@
-import { EyeOutlined, PlusOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { EyeOutlined, PlusOutlined, EyeInvisibleOutlined, SmileOutlined } from "@ant-design/icons";
 import Card from "../../components/Card";
 import { useState } from "react";
 import IconButton from "../../components/IconButton";
@@ -77,6 +77,10 @@ const Profiles = () => {
         )}
       </div>
       <div className="w-4/5 lg:flex lg:justify-start">
+        <div className="flex flex-row justify-evenly gap-2 bg-purple-200 text-purple-700 rounded-lg text-xs p-2 mb-2">
+          <SmileOutlined />
+          {"Tip: you can turn the visibility of your prescriptions to your family group on and off."}
+        </div>
         <Pill message={"Warning: medication A and medication B may have potential side effects when taken together. Please check with your G.P."} />
       </div>
       <div className="flex flex-col m-0 w-4/5 lg:flex-row gap-4">
