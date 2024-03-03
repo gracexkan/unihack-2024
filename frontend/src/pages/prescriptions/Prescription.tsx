@@ -153,7 +153,7 @@ const Prescription = ({reminders, setReminders} : { reminders: string[], setRemi
   useEffect(() => {}, [progress, isCamera, preview, image]);
 
   return (
-    <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto">
+    <div className="flex justify-center items-center text-left flex-col gap-3 overflow-y-auto mb-7">
       <h2 className="font-semibold text-2xl mt-3">Add a prescription</h2>
       <Progress
         percent={Math.round((progress / 3) * 100)}
