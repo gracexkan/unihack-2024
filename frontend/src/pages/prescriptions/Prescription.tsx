@@ -10,15 +10,13 @@ import Barcode from "../barcode/Barcode";
 import moment from 'moment';
 import dayjs from 'dayjs';
 
-const Prescription = () => {
+const Prescription = ({reminders, setReminders} : { reminders: string[], setReminders: (reminders: string[]) => void }) => {
   document.title = "Add Prescription | Pill Pal";
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [isCamera, setIsCamera] = useState(false);
-  const [data, setData] = useState<TPrescription | undefined>();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [reminders, setReminders] = useState<string[]>([]);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [scan, setScan] = useState(false);
@@ -26,7 +24,7 @@ const Prescription = () => {
   const { RangePicker } = DatePicker;
 
   const addReminder = () => {
-    setReminders([...reminders, '']); // Add an empty string as a placeholder for the new reminder
+    setReminders([...reminders, '']);
   };
 
   const updateReminder = (value: dayjs.Dayjs | null, index: number) => {
